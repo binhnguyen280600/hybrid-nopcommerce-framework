@@ -1,5 +1,5 @@
 
 package utilities;
 
-public class JDBCConfig {
+public class PropertiesConfig {
 }

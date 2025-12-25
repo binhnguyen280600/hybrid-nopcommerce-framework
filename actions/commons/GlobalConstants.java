@@ -1,4 +1,4 @@
 package commons;
 
-public class GlobalConstant {
+public class GlobalConstants {
 }

@@ -1,4 +1,4 @@
 package retryConfigs;
 
-public class retryAnalyser {
+public class retryAnalyzer {
 }
