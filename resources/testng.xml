@@ -1,9 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="NopEcommerce Automation Testing">
-    <test name="Run on FIREFOX browser">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="NopCommerce UI Automation" verbose="1">
+
+
+    <parameter name="urlUser" value="http://localhost:8082/"/>
+    <parameter name="urlAdmin" value="http://localhost:8082/admin"/>
+
+    <test name="Run on Chrome browser">
+        <parameter name="browser" value="Chrome"/>
         <classes>
-            <class name="com.nopcommerce.users.User_01_Register_Login"/>
+            <class name="com.nopcommerce.users.Level_01_Repeat_Yourself"/>
         </classes>
     </test>
+
 </suite>
