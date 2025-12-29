@@ -14,12 +14,14 @@ import java.util.Set;
 
 
 public class BasePage {
-    //function (Hàm dùng chung) cho nhiều class khác
+    public static BasePage getBasePage() {
+        return new BasePage();
+    }
+
     public boolean isElementDisplayed(WebDriver driver) {
         return driver.findElement(By.cssSelector("")).isDisplayed();
     }
 
-    //function (Hàm dùng chung) cho nhiều class khác
     public void openPageUrl(WebDriver driver, String url) {
         driver.get(url);
     }
@@ -130,7 +132,7 @@ public class BasePage {
         getElement(driver, locator).click();
     }
 
-    public void sendKeysToElement(WebDriver driver, String keysToSend, String locator) {
+    public void sendKeysToElement(WebDriver driver, String locator, String keysToSend ) {
         getElement(driver, locator).sendKeys(keysToSend);
     }
 
@@ -189,17 +191,18 @@ public class BasePage {
         return getListElement(driver, locator).size();
     }
 
-    public void checkToElement(WebDriver driver, String locator) {
+    public void checkToCheckboxRadio(WebDriver driver, String locator) {
         if (!getElement(driver, locator).isSelected()) {
             getElement(driver, locator).click();
         }
     }
 
-    public void unCheckToElement(WebDriver driver, String locator) {
+    public void unCheckToCheckbox(WebDriver driver, String locator) {
         if (getElement(driver, locator).isSelected()) {
             getElement(driver, locator).click();
         }
     }
+
 
     public boolean isElementDisplayed(WebDriver driver, String locator) {
         return getElement(driver, locator).isDisplayed();
@@ -215,6 +218,14 @@ public class BasePage {
 
     public void clickAndHoldToElement(WebDriver driver, String locator) {
         new Actions(driver).clickAndHold(getElement(driver, locator)).perform();
+    }
+
+    public void releaseLeftMouse(WebDriver driver) {
+        new Actions(driver).release();
+    }
+
+    public void clickToElementByAction(WebDriver driver, String locator) {
+        new Actions(driver).click(getElement(driver, locator)).perform();
     }
 
     public void doubleClickToElement(WebDriver driver, String locator) {
@@ -291,6 +302,10 @@ public class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOfElementLocated(getByXpath (locator)));
     }
 
+    public void waitForElementSelected(WebDriver driver, String locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeSelected(getByXpath (locator)));
+    }
+
     public void waitForElementPresence(WebDriver driver, String locator) {
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(getByXpath (locator)));
     }
@@ -302,4 +317,5 @@ public class BasePage {
     public void waitForElementClickable(WebDriver driver, String locator) {
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(getByXpath (locator)));
     }
+
 }

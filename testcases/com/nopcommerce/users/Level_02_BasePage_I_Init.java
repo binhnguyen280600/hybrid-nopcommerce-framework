@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Random;
 
-public class Level_02_BasePage_Init {
+public class Level_02_BasePage_I_Init {
     WebDriver driver;
     BasePage basePage;
     String emailAddress;
@@ -23,14 +23,14 @@ public class Level_02_BasePage_Init {
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
+        driver.get("http://localhost:8082/");
         basePage = new BasePage();
-        driver.get("https://demo.nopcommerce.com/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         firstName = "binh";
         lastName = "nguyen";
         password = "Abc13579";
         company = "Goyoung";
-        emailAddress = "nhubinh" + generateRandomNumber() + "gmail.com";
+        emailAddress = "nhubinh" + generateRandomNumber() + "@gmail.com";
     }
 
     @Test
@@ -41,8 +41,8 @@ public class Level_02_BasePage_Init {
         basePage.waitForElementClickable(driver, "//input[@id='gender-female']");
         basePage.clickToElement(driver, "//input[@id='gender-female']");
 
-        basePage.sendKeysToElement(driver, "//input[@id='FirstName']", "binh");
-        basePage.sendKeysToElement(driver, "//input[@id='LastName']", "nguyen");
+        basePage.sendKeysToElement(driver, "//input[@id='FirstName']", firstName);
+        basePage.sendKeysToElement(driver, "//input[@id='LastName']", lastName);
 
         basePage.sendKeysToElement(driver, "//input[@id='Email']", emailAddress);
         basePage.sendKeysToElement(driver, "//input[@id='Company']", company);
@@ -57,21 +57,33 @@ public class Level_02_BasePage_Init {
         Assert.assertEquals(basePage.getText(driver, "//div[@class='result']"), "Your registration completed");
     }
 
+    @Test
     public void user_02_Login() {
+        basePage.waitForElementClickable(driver, "//a[@class='ico-logout']");
+        basePage.clickToElement(driver, "//a[@class='ico-logout']");
+
         basePage.waitForElementClickable(driver, "//a[@class='ico-login']");
         basePage.clickToElement(driver, "//a[@class='ico-login']");
 
         basePage.sendKeysToElement(driver, "//input[@id='Email']", emailAddress);
         basePage.sendKeysToElement(driver, "//input[@id='Password']", password);
 
-        basePage.waitForElementClickable(driver, "");
-        basePage.clickToElement(driver, "");
+        basePage.waitForElementClickable(driver, "//button[text()='Log in']");
+        basePage.clickToElement(driver, "//button[text()='Log in']");
 
-
+        Assert.assertTrue(basePage.isElementDisplayed(driver, "//a[@class='ico-account' and text()='My account']"));
     }
 
+    @Test
     public void user_03_MyAccount() {
+        basePage.waitForElementClickable(driver, "//a[@class='ico-account']");
+        basePage.clickToElement(driver, "//a[@class='ico-account']");
 
+        Assert.assertTrue(basePage.isElementSelected(driver, "//input[@id='gender-female']"));
+        Assert.assertEquals(basePage.getElementAttribute(driver, "//input[@id='FirstName']", "value"), firstName);
+        Assert.assertEquals(basePage.getElementAttribute(driver, "//input[@id='LastName']", "value"), lastName);
+        Assert.assertEquals(basePage.getElementAttribute(driver, "//input[@id='Email']", "value"), emailAddress);
+        Assert.assertEquals(basePage.getElementAttribute(driver, "//input[@id='Company']", "value"), company);
     }
 
 

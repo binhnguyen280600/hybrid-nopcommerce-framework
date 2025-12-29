@@ -49,19 +49,19 @@ public class Level_01_Repeat_Yourself {
 
     @Test
     public void TC_02_Register() {
+        driver.findElement(By.cssSelector("a.ico-logout")).click();
         driver.findElement(By.cssSelector("a.ico-login")).click();
         driver.findElement(By.cssSelector("input#Email")).sendKeys(emailAddress);
         driver.findElement(By.cssSelector("input#Password")).sendKeys(password);
         driver.findElement(By.cssSelector("button.login-button")).click();
 
         Assert.assertTrue(driver.findElement(By.xpath("//a[@class='ico-account' and text()='My account']")).isDisplayed());
-
     }
 
     @Test
     public void TC_03_Register() {
-        driver.findElement(By.cssSelector("a.ico-login")).click();
 
+        driver.findElement(By.cssSelector("a.ico-account")).click();
         Assert.assertTrue(driver.findElement(By.cssSelector("input#gender-female")).isSelected());
         Assert.assertEquals(driver.findElement(By.cssSelector("input#FirstName")).getAttribute("value"), firstName);
 
