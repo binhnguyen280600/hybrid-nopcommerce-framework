@@ -133,6 +133,7 @@ public class BasePage {
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String keysToSend ) {
+        getElement(driver, locator).clear();
         getElement(driver, locator).sendKeys(keysToSend);
     }
 
