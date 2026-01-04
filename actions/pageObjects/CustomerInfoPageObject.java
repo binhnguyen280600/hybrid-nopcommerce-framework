@@ -6,10 +6,11 @@ import pageUIs.CustomerInfoPageUI;
 
 import java.sql.Driver;
 
-public class CustomerInfoPageObject extends BasePage {
+public class CustomerInfoPageObject extends SidebarPageObject {
     private WebDriver driver;
 
     public CustomerInfoPageObject(WebDriver driver) {
+        super(driver);
         this.driver = driver;
     }
 

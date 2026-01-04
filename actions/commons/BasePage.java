@@ -321,6 +321,7 @@ public class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(getByXpath (locator)));
     }
 
+    //Only use for Level_07
     public RewardPointPageObject openRewardPointPage(WebDriver driver) {
         waitForElementClickable(driver, BasePageUI.REWARD_POINT_LINK);
         clickToElement(driver, BasePageUI.REWARD_POINT_LINK);
@@ -334,16 +335,16 @@ public class BasePage {
     }
 
     public AddressPageObject openAddressPage(WebDriver driver) {
-        waitForElementClickable(driver, BasePageUI.ADDRESS_LINK);
+        waitForElementClickable(driver, SidebarPageUI.ADDRESS_LINK);
         clickToElement(driver, BasePageUI.ADDRESS_LINK);
         return  PageGenerator.getAddressPage(driver);
     }
 
     public OrderPageObject openOrderPage(WebDriver driver) {
-        waitForElementClickable(driver, BasePageUI.ORDER_PAGE_LINK);
+        waitForElementClickable(driver, SidebarPageUI.ORDER_PAGE_LINK);
         clickToElement(driver, BasePageUI.ORDER_PAGE_LINK);
         return PageGenerator.getOrderPage(driver);
-
     }
+
 
 }

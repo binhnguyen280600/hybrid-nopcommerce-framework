@@ -9,7 +9,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.*;
 
-public class Level_07_Switch_Page_Object extends BaseTest {
+public class Level_08_Page_Navigation extends BaseTest {
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
@@ -65,21 +65,19 @@ public class Level_07_Switch_Page_Object extends BaseTest {
 
     @Test
     public void User_04_Switch_Page() {
-        loginPage.openAddressPage(driver);
+        addressPage = customerInfoPage.openAddressPage();
 
-        addressPage = customerInfoPage.openAddressPage(driver);
+        rewardPointPage = addressPage.openRewardPointPage();
 
-        rewardPointPage = addressPage.openRewardPointPage(driver);
+        orderPage = rewardPointPage.openOrderPage();
 
-        orderPage = rewardPointPage.openOrderPage(driver);
+        addressPage = orderPage.openAddressPage();
 
-        addressPage = orderPage.openAddressPage(driver);
+        customerInfoPage = addressPage.openCustomerInfoPage();
 
-        customerInfoPage = addressPage.openCustomerInfoPage(driver);
+        rewardPointPage = customerInfoPage.openRewardPointPage();
 
-        rewardPointPage = customerInfoPage.openRewardPointPage(driver);
-
-        addressPage = rewardPointPage.openAddressPage(driver);
+        addressPage = rewardPointPage.openAddressPage();
     }
 
 
