@@ -38,9 +38,5 @@ public class CustomerInfoPageObject extends BasePage {
         return getElementAttribute(driver, CustomerInfoPageUI.COMPANY_TEXTBOX, "value");
     }
 
-    public AddressPageObject openAddressPage() {
-        waitForElementClickable(driver, CustomerInfoPageUI.ADDRESS_LINK);
-        clickToElement(driver, CustomerInfoPageUI.ADDRESS_LINK);
-        return  PageGenerator.getAddressPage(driver);
-    }
+
 }

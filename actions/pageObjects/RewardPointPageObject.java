@@ -12,10 +12,5 @@ public class RewardPointPageObject extends BasePage {
         this.driver = driver;
     }
 
-    public OrderPageObject openOrderPage() {
-        waitForElementClickable(driver, RewardPointPageUI.ORDER_PAGE_LINK);
-        clickToElement(driver, RewardPointPageUI.ORDER_PAGE_LINK);
-        return PageGenerator.getOrderPage(driver);
 
-    }
 }

@@ -12,9 +12,4 @@ public class OrderPageObject extends BasePage {
         this.driver = driver;
     }
 
-    public AddressPageObject openAddressPage() {
-        waitForElementClickable(driver, OrderPageUI.ADDRESS_LINK);
-        clickToElement(driver, OrderPageUI.ADDRESS_LINK);
-        return PageGenerator.getAddressPage(driver);
-    }
 }
