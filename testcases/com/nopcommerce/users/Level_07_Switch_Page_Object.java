@@ -7,34 +7,28 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageFactory.CustomerInfoPageFactory;
-import pageFactory.HomePageFactory;
-import pageFactory.LoginPageFactory;
-import pageFactory.RegisterPageFactory;
+import pageObjects.*;
 
-
-public class Level_05_PageFactory extends BaseTest {
-    private WebDriver driver;
+public class Level_07_Switch_Page_Object extends BaseTest {
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
 
-        homePage = new HomePageFactory(driver);
+        homePage = PageGenerator.getHomePage(driver);
+
         firstName = "binh";
         lastName = "nguyen";
         password = "Abc13579";
         company = "Goyoung";
-        emailAddress = "nhubinh" + generateRandomNumber ()  + "@gmail.com";
+        emailAddress = "nhubinh" + generateRandomNumber() + "@gmail.com";
 
     }
 
+    // Testcases
     @Test
     public void User_01_Register() {
-        homePage.clickToRegisterLink();
-
-        registerPage = new RegisterPageFactory(driver);
-
+        registerPage = homePage.clickToRegisterPage();
         registerPage.clickToFemaleRadio();
         registerPage.enterToFirstNameTextBox(firstName);
         registerPage.enterToLastNameTextBox(lastName);
@@ -45,30 +39,21 @@ public class Level_05_PageFactory extends BaseTest {
         registerPage.clickToRegisterButton();
 
         Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Your registration completed");
-
     }
 
     @Test
     public void User_02_Login() {
-        registerPage.clickToLogoutLink();
 
-        loginPage = new LoginPageFactory(driver);
+        loginPage = registerPage.clickToLogoutPage();
+        loginPage.clickToLoginPage();
 
-        loginPage.clickToLoginLink();
-        loginPage.enterToEmailTextbox(emailAddress);
-        loginPage.enterToPasswordTextBox(password);
-        loginPage.clickToLoginButton();
-
-        homePage = new HomePageFactory(driver);
-
+        homePage = loginPage.loginToSystem(emailAddress, password);
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_MyAccount() {
-        homePage.clickToMyAccountLink();
-
-        customerInfoPage = new CustomerInfoPageFactory(driver);
+        customerInfoPage = homePage.clickToMyAccountPage();
 
         Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 
@@ -78,13 +63,34 @@ public class Level_05_PageFactory extends BaseTest {
         Assert.assertEquals(customerInfoPage.getCompanyTextboxValue(), company);
     }
 
-    @AfterClass
+    @Test
+    public void User_04_Switch_Page() {
+
+        addressPage = customerInfoPage.openAddressPage();
+
+        rewardPointPage = addressPage.openRewardPointPage();
+
+        orderPage = rewardPointPage.openOrderPage();
+
+        addressPage = orderPage.openAddressPage();
+
+        customerInfoPage = addressPage.openCustomerInfoPage();
+
+    }
+
+
+        @AfterClass
     public void afterClass() {
         driver.quit();
     }
-    private CustomerInfoPageFactory customerInfoPage;
-    private LoginPageFactory loginPage;
-    private RegisterPageFactory registerPage;
-    private HomePageFactory homePage;
+
+    private WebDriver driver;
+    private CustomerInfoPageObject customerInfoPage;
+    private LoginPageObject loginPage;
+    private RegisterPageObject registerPage;
+    private HomePageObject homePage;
+    private OrderPageObject orderPage;
+    private RewardPointPageObject rewardPointPage;
+    private AddressPageObject addressPage;
     private String emailAddress, firstName, lastName, password, company;
 }

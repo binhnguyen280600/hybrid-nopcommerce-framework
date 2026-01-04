@@ -11,7 +11,6 @@ import pageObjects.CustomerInfoPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.RegisterPageObject;
-import pageUIs.CustomerInfoPageUI;
 
 import java.time.Duration;
 
@@ -41,7 +40,7 @@ import java.time.Duration;
         // Testcases
         @Test
         public void User_01_Register() {
-            homePage.clickToRegisterLink();
+            homePage.clickToRegisterPage();
 
             registerPage = new RegisterPageObject(driver);
 
@@ -60,11 +59,11 @@ import java.time.Duration;
 
         @Test
         public void User_02_Login() {
-            registerPage.clickToLogoutLink();
+            registerPage.clickToLogoutPage();
 
             loginPage = new LoginPageObject(driver);
 
-            loginPage.clickToLoginLink();
+            loginPage.clickToLoginPage();
             loginPage.enterToEmailTextbox(emailAddress);
             loginPage.enterToPasswordTextBox(password);
             loginPage.clickToLoginButton();
@@ -76,7 +75,7 @@ import java.time.Duration;
 
         @Test
         public void User_03_MyAccount() {
-            homePage.clickToMyAccountLink();
+            homePage.clickToMyAccountPage();
 
             customerInfoPage = new CustomerInfoPageObject(driver);
 

@@ -12,5 +12,7 @@ public class CustomerInfoPageUI {
 
     public static final String COMPANY_TEXTBOX = "//input[@id='Company']";
 
+    public static final String ADDRESS_LINK  = "//ul[@class = 'list'] //a[text() = 'Addresses']";
+
 
 }

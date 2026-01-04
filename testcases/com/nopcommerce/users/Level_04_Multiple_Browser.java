@@ -2,9 +2,6 @@ package com.nopcommerce.users;
 
 import commons.BaseTest;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -14,8 +11,6 @@ import pageObjects.CustomerInfoPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.RegisterPageObject;
-
-import java.time.Duration;
 
 public class Level_04_Multiple_Browser extends BaseTest {
     private WebDriver driver;
@@ -41,7 +36,7 @@ public class Level_04_Multiple_Browser extends BaseTest {
     // Testcases
     @Test
     public void User_01_Register() {
-        homePage.clickToRegisterLink();
+        homePage.clickToRegisterPage();
 
         registerPage = new RegisterPageObject(driver);
 
@@ -60,11 +55,11 @@ public class Level_04_Multiple_Browser extends BaseTest {
 
     @Test
     public void User_02_Login() {
-        registerPage.clickToLogoutLink();
+        registerPage.clickToLogoutPage();
 
         loginPage = new LoginPageObject(driver);
 
-        loginPage.clickToLoginLink();
+        loginPage.clickToLoginPage();
         loginPage.enterToEmailTextbox(emailAddress);
         loginPage.enterToPasswordTextBox(password);
         loginPage.clickToLoginButton();
@@ -76,7 +71,7 @@ public class Level_04_Multiple_Browser extends BaseTest {
 
     @Test
     public void User_03_MyAccount() {
-        homePage.clickToMyAccountLink();
+        homePage.clickToMyAccountPage();
 
         customerInfoPage = new CustomerInfoPageObject(driver);
 

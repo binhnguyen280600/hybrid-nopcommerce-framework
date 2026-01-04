@@ -7,20 +7,24 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageFactory.CustomerInfoPageFactory;
-import pageFactory.HomePageFactory;
-import pageFactory.LoginPageFactory;
-import pageFactory.RegisterPageFactory;
+import pageObjects.CustomerInfoPageObject;
+import pageObjects.HomePageObject;
+import pageObjects.LoginPageObject;
+import pageObjects.RegisterPageObject;
 
-
-public class Level_05_PageFactory extends BaseTest {
+public class Level_06_Page_Generator_01 extends BaseTest {
     private WebDriver driver;
+    private CustomerInfoPageObject customerInfoPage;
+    private LoginPageObject loginPage;
+    private RegisterPageObject registerPage;
+    private HomePageObject homePage;
+    private String emailAddress, firstName, lastName, password, company;
+
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
-
-        homePage = new HomePageFactory(driver);
+        homePage = new HomePageObject(driver);
         firstName = "binh";
         lastName = "nguyen";
         password = "Abc13579";
@@ -29,11 +33,12 @@ public class Level_05_PageFactory extends BaseTest {
 
     }
 
+    // Testcases
     @Test
     public void User_01_Register() {
-        homePage.clickToRegisterLink();
+        homePage.clickToRegisterPage();
 
-        registerPage = new RegisterPageFactory(driver);
+        registerPage = new RegisterPageObject(driver);
 
         registerPage.clickToFemaleRadio();
         registerPage.enterToFirstNameTextBox(firstName);
@@ -50,25 +55,25 @@ public class Level_05_PageFactory extends BaseTest {
 
     @Test
     public void User_02_Login() {
-        registerPage.clickToLogoutLink();
+        registerPage.clickToLogoutPage();
 
-        loginPage = new LoginPageFactory(driver);
+        loginPage = new LoginPageObject(driver);
 
-        loginPage.clickToLoginLink();
+        loginPage.clickToLoginPage();
         loginPage.enterToEmailTextbox(emailAddress);
         loginPage.enterToPasswordTextBox(password);
         loginPage.clickToLoginButton();
 
-        homePage = new HomePageFactory(driver);
+        homePage = new HomePageObject(driver);
 
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_MyAccount() {
-        homePage.clickToMyAccountLink();
+        homePage.clickToMyAccountPage();
 
-        customerInfoPage = new CustomerInfoPageFactory(driver);
+        customerInfoPage = new CustomerInfoPageObject(driver);
 
         Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 
@@ -82,9 +87,4 @@ public class Level_05_PageFactory extends BaseTest {
     public void afterClass() {
         driver.quit();
     }
-    private CustomerInfoPageFactory customerInfoPage;
-    private LoginPageFactory loginPage;
-    private RegisterPageFactory registerPage;
-    private HomePageFactory homePage;
-    private String emailAddress, firstName, lastName, password, company;
 }
