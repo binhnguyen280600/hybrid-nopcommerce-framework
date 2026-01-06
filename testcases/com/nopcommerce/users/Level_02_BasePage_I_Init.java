@@ -1,6 +1,7 @@
 package com.nopcommerce.users;
 
 import commons.BasePage;
+import commons.GlobalConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -23,7 +24,7 @@ public class Level_02_BasePage_I_Init {
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
-        driver.get("http://localhost:8082/");
+        driver.get(GlobalConstants.DEV_USER_URL);
         basePage = new BasePage();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         firstName = "binh";

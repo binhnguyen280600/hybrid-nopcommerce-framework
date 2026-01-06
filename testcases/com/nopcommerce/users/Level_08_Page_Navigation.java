@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.*;
+import pageObjects.users.*;
 
 public class Level_08_Page_Navigation extends BaseTest {
     @Parameters("browser")
@@ -15,7 +16,7 @@ public class Level_08_Page_Navigation extends BaseTest {
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
 
-        homePage = PageGenerator.getHomePage(driver);
+        homePage = PageGenerator.getUserHomePage(driver);
 
         firstName = "binh";
         lastName = "nguyen";
@@ -44,8 +45,8 @@ public class Level_08_Page_Navigation extends BaseTest {
     @Test
     public void User_02_Login() {
 
-        loginPage = registerPage.clickToLogoutPage();
-        loginPage.clickToLoginPage();
+//        loginPage = registerPage.clickToLogoutPage();
+//        loginPage.clickToLoginPage();
 
         homePage = loginPage.loginToSystem(emailAddress, password);
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
@@ -87,12 +88,12 @@ public class Level_08_Page_Navigation extends BaseTest {
     }
 
     private WebDriver driver;
-    private CustomerInfoPageObject customerInfoPage;
-    private LoginPageObject loginPage;
-    private RegisterPageObject registerPage;
-    private HomePageObject homePage;
-    private OrderPageObject orderPage;
-    private RewardPointPageObject rewardPointPage;
-    private AddressPageObject addressPage;
+    private UserCustomerInfoPO customerInfoPage;
+    private UserLoginPageObject loginPage;
+    private UserRegisterPO registerPage;
+    private UserHomePO homePage;
+    private UserOrderPO orderPage;
+    private UserRewardPointPO rewardPointPage;
+    private UserAddressPO addressPage;
     private String emailAddress, firstName, lastName, password, company;
 }

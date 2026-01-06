@@ -7,21 +7,24 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.*;
+import pageObjects.users.UserCustomerInfoPO;
+import pageObjects.users.UserHomePO;
+import pageObjects.users.UserLoginPageObject;
+import pageObjects.users.UserRegisterPO;
 
 public class Level_06_Page_Generator_02 extends BaseTest {
     private WebDriver driver;
-    private CustomerInfoPageObject customerInfoPage;
-    private LoginPageObject loginPage;
-    private RegisterPageObject registerPage;
-    private HomePageObject homePage;
+    private UserCustomerInfoPO customerInfoPage;
+    private UserLoginPageObject userLoginPage;
+    private UserRegisterPO userRegisterPage;
+    private UserHomePO userHomePage;
     private String emailAddress, firstName, lastName, password, company;
 
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
-        homePage = new HomePageObject(driver);
+        userHomePage = new UserHomePO(driver);
         firstName = "binh";
         lastName = "nguyen";
         password = "Abc13579";
@@ -33,34 +36,34 @@ public class Level_06_Page_Generator_02 extends BaseTest {
     // Testcases
     @Test
     public void User_01_Register() {
-        registerPage = homePage.clickToRegisterPage();
+        userRegisterPage = userHomePage.clickToRegisterPage();
 
-        registerPage.clickToFemaleRadio();
-        registerPage.enterToFirstNameTextBox(firstName);
-        registerPage.enterToLastNameTextBox(lastName);
-        registerPage.enterToEmailTextBox(emailAddress);
-        registerPage.enterToCompanyTextBox(company);
-        registerPage.enterToPasswordTextBox(password);
-        registerPage.enterToConfirmPasswordTextBox(password);
-        registerPage.clickToRegisterButton();
+        userRegisterPage.clickToFemaleRadio();
+        userRegisterPage.enterToFirstNameTextBox(firstName);
+        userRegisterPage.enterToLastNameTextBox(lastName);
+        userRegisterPage.enterToEmailTextBox(emailAddress);
+        userRegisterPage.enterToCompanyTextBox(company);
+        userRegisterPage.enterToPasswordTextBox(password);
+        userRegisterPage.enterToConfirmPasswordTextBox(password);
+        userRegisterPage.clickToRegisterButton();
 
-        Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Your registration completed");
+        Assert.assertEquals(userRegisterPage.getRegisterSuccessMessage(), "Your registration completed");
 
     }
 
     @Test
     public void User_02_Login() {
 
-        loginPage = registerPage.clickToLogoutPage();
-        loginPage.clickToLoginPage();
+        userHomePage = userRegisterPage.clickToLogoutPage();
+        userLoginPage = userHomePage.openLoginPage();
 
-        homePage = loginPage.loginToSystem(emailAddress, password);
-        Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
+        userHomePage = userLoginPage.loginToSystem(emailAddress, password);
+        Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_MyAccount() {
-        customerInfoPage = homePage.clickToMyAccountPage();
+        customerInfoPage = userHomePage.clickToMyAccountPage();
 
         Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 

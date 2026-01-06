@@ -8,13 +8,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.*;
+import pageObjects.users.UserCustomerInfoPO;
+import pageObjects.users.UserHomePO;
+import pageObjects.users.UserLoginPageObject;
+import pageObjects.users.UserRegisterPO;
 
 public class Level_06_Page_Generator_03 extends BaseTest {
     private WebDriver driver;
-    private CustomerInfoPageObject customerInfoPage;
-    private LoginPageObject loginPage;
-    private RegisterPageObject registerPage;
-    private HomePageObject homePage;
+    private UserCustomerInfoPO customerInfoPage;
+    private UserLoginPageObject loginPage;
+    private UserRegisterPO registerPage;
+    private UserHomePO homePage;
     private String emailAddress, firstName, lastName, password, company;
 
     @Parameters("browser")
@@ -22,7 +26,7 @@ public class Level_06_Page_Generator_03 extends BaseTest {
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
 
-        homePage = PageGenerator.getHomePage(driver);
+        homePage = PageGenerator.getUserHomePage(driver);
 
         firstName = "binh";
         lastName = "nguyen";
@@ -52,7 +56,7 @@ public class Level_06_Page_Generator_03 extends BaseTest {
     @Test
     public void User_02_Login() {
 
-        loginPage = registerPage.clickToLogoutPage();
+//        loginPage = registerPage.clickToLogoutPage();
         loginPage.clickToLoginPage();
 
         homePage = loginPage.loginToSystem(emailAddress, password);

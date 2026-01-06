@@ -7,9 +7,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.*;
-import pageUIs.*;
+import pageObjects.users.UserAddressPO;
+import pageObjects.users.UserCustomerInfoPO;
+import pageObjects.users.UserOrderPO;
+import pageObjects.users.UserRewardPointPO;
+import pageUIs.users.UserBasePageUI;
+import pageUIs.users.UserSidebarPageUI;
 
-import javax.lang.model.element.Element;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -62,7 +66,7 @@ public class BasePage {
     }
 
     public Alert waitAlertPresence(WebDriver driver) {
-        return new WebDriverWait(driver, Duration.ofSeconds(15))
+        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
                 .until(ExpectedConditions.alertIsPresent());
     }
 
@@ -118,16 +122,34 @@ public class BasePage {
         driver.switchTo().window(parentID);
     }
 
-    public WebElement getElement(WebDriver driver, String locator) {
-        return driver.findElement(By.xpath(locator));
+    protected WebElement getElement(WebDriver driver, String locator) {
+        return driver.findElement(getByLocator(locator));
     }
 
-    public List<WebElement> getListElement(WebDriver driver, String locator) {
-        return driver.findElements(By.xpath(locator));
+    protected List<WebElement> getListElement(WebDriver driver, String locator) {
+        return driver.findElements(getByLocator(locator));
+    }
+
+    private By getByLocator(String prefixLocator) {
+        By by = null;
+        if (prefixLocator.toUpperCase().startsWith("CSS")) {
+            by = By.cssSelector(prefixLocator.substring(4));
+        } else if (prefixLocator.toUpperCase().startsWith("ID")) {
+            by = By.id(prefixLocator.substring(3));
+        } else if (prefixLocator.toUpperCase().startsWith("CLASS")) {
+            by = By.className(prefixLocator.substring(6));
+        } else if (prefixLocator.toUpperCase().startsWith("TAGNAME")) {
+            by = By.tagName(prefixLocator.substring(8));
+        }else if (prefixLocator.toUpperCase().startsWith("XPATH")) {
+            by = By.xpath(prefixLocator.substring(6));
+        } else {
+            throw new RuntimeException("Locator type is not support!!!");
+        }
+        return by;
     }
 
     public By getByXpath (String locator) {
-        return By.xpath(locator);
+        return getByLocator(locator);
     }
 
     public void clickToElement(WebDriver driver, String locator) {
@@ -154,10 +176,10 @@ public class BasePage {
     }
 
     public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childItemLocator, String expectedItem) throws InterruptedException {
-        driver.findElement(By.xpath(parentLocator)).click();
+        driver.findElement(getByLocator(parentLocator)).click();
         sleepInSecond(2);
-        List<WebElement> allItems = new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(childItemLocator)));
+        List<WebElement> allItems = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childItemLocator)));
         sleepInSecond(2);
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectedItem)) {
@@ -302,49 +324,50 @@ public class BasePage {
                 getElement(driver, locator));
     }
     public void waitForElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOfElementLocated(getByXpath (locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator (locator)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeSelected(getByXpath (locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(getByLocator (locator)));
     }
 
     public void waitForElementPresence(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(getByXpath (locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(getByLocator (locator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.invisibilityOfElementLocated(getByXpath (locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator (locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(getByXpath (locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator (locator)));
     }
 
     //Only use for Level_07
-    public RewardPointPageObject openRewardPointPage(WebDriver driver) {
-        waitForElementClickable(driver, BasePageUI.REWARD_POINT_LINK);
-        clickToElement(driver, BasePageUI.REWARD_POINT_LINK);
-        return PageGenerator.getRewardPointPage(driver);
+    public UserRewardPointPO openRewardPointPage(WebDriver driver) {
+        waitForElementClickable(driver, UserBasePageUI.REWARD_POINT_LINK);
+        clickToElement(driver, UserBasePageUI.REWARD_POINT_LINK);
+        return PageGenerator.getUserRewardPointPage(driver);
     }
 
-    public CustomerInfoPageObject openCustomerInfoPage(WebDriver driver) {
-        waitForElementClickable(driver, BasePageUI.CUSTOMER_INFO_LINK);
-        clickToElement(driver, BasePageUI.CUSTOMER_INFO_LINK);
-        return PageGenerator.getCustomerInfoPage(driver);
+    public UserCustomerInfoPO openCustomerInfoPage(WebDriver driver) {
+        waitForElementClickable(driver, UserBasePageUI.CUSTOMER_INFO_LINK);
+        clickToElement(driver, UserBasePageUI.CUSTOMER_INFO_LINK);
+        return PageGenerator.getUserCustomerInfoPage(driver);
     }
 
-    public AddressPageObject openAddressPage(WebDriver driver) {
-        waitForElementClickable(driver, SidebarPageUI.ADDRESS_LINK);
-        clickToElement(driver, BasePageUI.ADDRESS_LINK);
-        return  PageGenerator.getAddressPage(driver);
+    public UserAddressPO openAddressPage(WebDriver driver) {
+        waitForElementClickable(driver, UserSidebarPageUI.ADDRESS_LINK);
+        clickToElement(driver, UserBasePageUI.ADDRESS_LINK);
+        return  PageGenerator.getUserAddressPage(driver);
     }
 
-    public OrderPageObject openOrderPage(WebDriver driver) {
-        waitForElementClickable(driver, SidebarPageUI.ORDER_PAGE_LINK);
-        clickToElement(driver, BasePageUI.ORDER_PAGE_LINK);
-        return PageGenerator.getOrderPage(driver);
+    public UserOrderPO openOrderPage(WebDriver driver) {
+        waitForElementClickable(driver, UserSidebarPageUI.ORDER_PAGE_LINK);
+        clickToElement(driver, UserBasePageUI.ORDER_PAGE_LINK);
+        return PageGenerator.getUserOrderPage(driver);
     }
+
 
 
 }

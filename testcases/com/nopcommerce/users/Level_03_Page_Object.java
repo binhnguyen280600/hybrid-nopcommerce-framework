@@ -7,19 +7,19 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageObjects.CustomerInfoPageObject;
-import pageObjects.HomePageObject;
-import pageObjects.LoginPageObject;
-import pageObjects.RegisterPageObject;
+import pageObjects.users.UserCustomerInfoPO;
+import pageObjects.users.UserHomePO;
+import pageObjects.users.UserLoginPageObject;
+import pageObjects.users.UserRegisterPO;
 
 import java.time.Duration;
 
     public class Level_03_Page_Object extends BaseTest {
         private WebDriver driver;
-        private CustomerInfoPageObject customerInfoPage;
-        private LoginPageObject loginPage;
-        private RegisterPageObject registerPage;
-        private HomePageObject homePage;
+        private UserCustomerInfoPO customerInfoPage;
+        private UserLoginPageObject loginPage;
+        private UserRegisterPO registerPage;
+        private UserHomePO homePage;
         private String emailAddress, firstName, lastName, password, company;
 
         // Pre-Condition
@@ -28,7 +28,7 @@ import java.time.Duration;
             driver = new FirefoxDriver();
             driver.get("http://localhost:8082/");
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-            homePage = new HomePageObject(driver);
+            homePage = new UserHomePO(driver);
             firstName = "binh";
             lastName = "nguyen";
             password = "Abc13579";
@@ -42,7 +42,7 @@ import java.time.Duration;
         public void User_01_Register() {
             homePage.clickToRegisterPage();
 
-            registerPage = new RegisterPageObject(driver);
+            registerPage = new UserRegisterPO(driver);
 
             registerPage.clickToFemaleRadio();
             registerPage.enterToFirstNameTextBox(firstName);
@@ -61,14 +61,14 @@ import java.time.Duration;
         public void User_02_Login() {
             registerPage.clickToLogoutPage();
 
-            loginPage = new LoginPageObject(driver);
+            loginPage = new UserLoginPageObject(driver);
 
             loginPage.clickToLoginPage();
             loginPage.enterToEmailTextbox(emailAddress);
             loginPage.enterToPasswordTextBox(password);
             loginPage.clickToLoginButton();
 
-            homePage = new HomePageObject(driver);
+            homePage = new UserHomePO(driver);
 
             Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
         }
@@ -77,7 +77,7 @@ import java.time.Duration;
         public void User_03_MyAccount() {
             homePage.clickToMyAccountPage();
 
-            customerInfoPage = new CustomerInfoPageObject(driver);
+            customerInfoPage = new UserCustomerInfoPO(driver);
 
             Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 
