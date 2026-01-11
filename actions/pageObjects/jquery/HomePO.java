@@ -1,10 +1,13 @@
 package pageObjects.jquery;
 
 import commons.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageUI.jquery.HomePageUI;
+import pageUIs.nopCommerce.UserBasePageUI;
+import pageUIs.nopCommerce.users.UserHomePageUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,4 +108,22 @@ public class HomePO extends BasePage {
         return allTextValue;
     }
 
+    public boolean isFileLoadedByName(String fileName) {
+        waitForElementVisible(driver, HomePageUI.FILE_LOADED_BY_FILE_NAME, fileName);
+        return isElementDisplayed(driver, HomePageUI.FILE_LOADED_BY_FILE_NAME, fileName);
+    }
+
+    public void clickToUpLoadButton(WebDriver driver) throws InterruptedException {
+        List<WebElement> startButtons = getListElement(driver, HomePageUI.UPLOAD_BUTTON);
+        for (WebElement button : startButtons) {
+            button.click();
+            sleepInSeconds( 3);
+        }
+
+    }
+
+    public boolean isFileUploadedByName(String fileName) {
+        waitForElementVisible(driver, HomePageUI.FILE_UPLOADED_SUCCESS_BY_FILE_NAME, fileName);
+        return isElementDisplayed(driver, HomePageUI.FILE_UPLOADED_SUCCESS_BY_FILE_NAME, fileName);
+    }
 }

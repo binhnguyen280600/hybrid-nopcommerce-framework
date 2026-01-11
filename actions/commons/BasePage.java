@@ -408,6 +408,16 @@ public class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator (castParameter(locator, restParameter))));
     }
 
+    public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
+        String filePath = GlobalConstants.UPLOAD_PATH;
+        String fullFileName = "";
+        for (String file : fileNames) {
+            fullFileName +=  filePath + file + "\n";
+        }
+        fullFileName = fullFileName.trim();
+        getElement(driver, UserBasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+    }
+
     //Only use for Level_07
     public UserRewardPointPO openRewardPointPage(WebDriver driver) {
         waitForElementClickable(driver, UserBasePageUI.REWARD_POINT_LINK);
