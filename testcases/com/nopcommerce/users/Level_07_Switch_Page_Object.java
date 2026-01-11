@@ -7,8 +7,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.*;
-import pageObjects.users.*;
+import pageObjects.nopCommerce.PageGenerator;
+import pageObjects.nopCommerce.users.*;
 
 public class Level_07_Switch_Page_Object extends BaseTest {
     @Parameters("browser")
@@ -89,7 +89,7 @@ public class Level_07_Switch_Page_Object extends BaseTest {
 
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
-    private UserLoginPageObject loginPage;
+    private UserLoginPO loginPage;
     private UserRegisterPO registerPage;
     private UserHomePO homePage;
     private UserOrderPO orderPage;

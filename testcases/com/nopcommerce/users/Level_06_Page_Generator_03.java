@@ -7,16 +7,16 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.*;
-import pageObjects.users.UserCustomerInfoPO;
-import pageObjects.users.UserHomePO;
-import pageObjects.users.UserLoginPageObject;
-import pageObjects.users.UserRegisterPO;
+import pageObjects.nopCommerce.PageGenerator;
+import pageObjects.nopCommerce.users.UserCustomerInfoPO;
+import pageObjects.nopCommerce.users.UserHomePO;
+import pageObjects.nopCommerce.users.UserLoginPO;
+import pageObjects.nopCommerce.users.UserRegisterPO;
 
 public class Level_06_Page_Generator_03 extends BaseTest {
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
-    private UserLoginPageObject loginPage;
+    private UserLoginPO loginPage;
     private UserRegisterPO registerPage;
     private UserHomePO homePage;
     private String emailAddress, firstName, lastName, password, company;

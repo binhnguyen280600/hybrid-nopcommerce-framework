@@ -52,7 +52,7 @@ public class Level_02_BasePage_III_Inheritance extends BasePage{
 
         clickToElement(driver, "//button[@id='register-button']");
 
-        Assert.assertEquals(getText(driver, "//div[@class='result']"), "Your registration completed");
+        Assert.assertEquals(getElementText(driver, "//div[@class='result']"), "Your registration completed");
     }
 
     @Test

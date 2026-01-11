@@ -7,15 +7,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.users.UserCustomerInfoPO;
-import pageObjects.users.UserHomePO;
-import pageObjects.users.UserLoginPageObject;
-import pageObjects.users.UserRegisterPO;
+import pageObjects.nopCommerce.users.UserCustomerInfoPO;
+import pageObjects.nopCommerce.users.UserHomePO;
+import pageObjects.nopCommerce.users.UserLoginPO;
+import pageObjects.nopCommerce.users.UserRegisterPO;
 
 public class Level_06_Page_Generator_02 extends BaseTest {
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
-    private UserLoginPageObject userLoginPage;
+    private UserLoginPO userLoginPage;
     private UserRegisterPO userRegisterPage;
     private UserHomePO userHomePage;
     private String emailAddress, firstName, lastName, password, company;
@@ -55,7 +55,7 @@ public class Level_06_Page_Generator_02 extends BaseTest {
     public void User_02_Login() {
 
         userHomePage = userRegisterPage.clickToLogoutPage();
-        userLoginPage = userHomePage.openLoginPage();
+        userHomePage.openLoginPage();
 
         userHomePage = userLoginPage.loginToSystem(emailAddress, password);
         Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());

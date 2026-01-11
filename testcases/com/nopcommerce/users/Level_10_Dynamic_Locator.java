@@ -10,13 +10,13 @@ import org.testng.annotations.Test;
 import pageObjects.nopCommerce.PageGenerator;
 import pageObjects.nopCommerce.users.*;
 
-public class Level_08_Page_Navigation extends BaseTest {
+public class Level_10_Dynamic_Locator extends BaseTest {
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
 
-        homePage = PageGenerator.getUserHomePage(driver);
+        userHomePage = PageGenerator.getUserHomePage(driver);
 
         firstName = "binh";
         lastName = "nguyen";
@@ -29,7 +29,7 @@ public class Level_08_Page_Navigation extends BaseTest {
     // Testcases
     @Test
     public void User_01_Register() {
-        registerPage = homePage.clickToRegisterPage();
+        registerPage = userHomePage.clickToRegisterPage();
         registerPage.clickToFemaleRadio();
         registerPage.enterToFirstNameTextBox(firstName);
         registerPage.enterToLastNameTextBox(lastName);
@@ -45,16 +45,16 @@ public class Level_08_Page_Navigation extends BaseTest {
     @Test
     public void User_02_Login() {
 
-//        loginPage = registerPage.clickToLogoutPage();
-//        loginPage.clickToLoginPage();
+        userHomePage = registerPage.clickToLogoutPage();
+        userLoginPage = userHomePage.openLoginPage();
 
-        homePage = loginPage.loginToSystem(emailAddress, password);
-        Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
+        userHomePage = userLoginPage.loginToSystem(emailAddress, password);
+        Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_MyAccount() {
-        customerInfoPage = homePage.clickToMyAccountPage();
+        customerInfoPage = userHomePage.clickToMyAccountPage();
 
         Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 
@@ -65,33 +65,52 @@ public class Level_08_Page_Navigation extends BaseTest {
     }
 
     @Test
-    public void User_04_Switch_Page() {
-        addressPage = customerInfoPage.openAddressPage();
+    public void User_04_Dynamic_Page() {
+        addressPage = (UserAddressPO) customerInfoPage.openSidebarLinkByPageName("Addresses");
 
-        rewardPointPage = addressPage.openRewardPointPage();
+        rewardPointPage = (UserRewardPointPO) addressPage.openSidebarLinkByPageName("Reward points");
 
-        orderPage = rewardPointPage.openOrderPage();
+        orderPage = (UserOrderPO) rewardPointPage.openSidebarLinkByPageName("Orders");
 
-        addressPage = orderPage.openAddressPage();
+        addressPage = (UserAddressPO) orderPage.openSidebarLinkByPageName("Addresses");
 
-        customerInfoPage = addressPage.openCustomerInfoPage();
+        customerInfoPage = (UserCustomerInfoPO) addressPage.openSidebarLinkByPageName("Customer info");
 
-        rewardPointPage = customerInfoPage.openRewardPointPage();
+        rewardPointPage = (UserRewardPointPO) customerInfoPage.openSidebarLinkByPageName("Reward points");
 
-        addressPage = rewardPointPage.openAddressPage();
+        addressPage = (UserAddressPO) rewardPointPage.openSidebarLinkByPageName("Addresses");
+    }
+
+    @Test
+    public void User_05_Dynamic_Page() {
+        addressPage.openSidebarLinkByPageNames("Reward points");
+        rewardPointPage = PageGenerator.getUserRewardPointPage(driver);
+
+        rewardPointPage.openSidebarLinkByPageNames("Orders");
+        orderPage = PageGenerator.getUserOrderPage(driver);
+
+        orderPage.openSidebarLinkByPageNames("Addresses");
+        addressPage = PageGenerator.getUserAddressPage(driver);
+
+        addressPage.openSidebarLinkByPageNames("Customer info");
+        customerInfoPage = PageGenerator.getUserCustomerInfoPage(driver);
+
+        customerInfoPage.openSidebarLinkByPageNames("Reward points");
+        rewardPointPage = PageGenerator.getUserRewardPointPage(driver);
+
     }
 
 
-        @AfterClass
+    @AfterClass
     public void afterClass() {
         driver.quit();
     }
 
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
-    private UserLoginPO loginPage;
+    private UserLoginPO userLoginPage;
     private UserRegisterPO registerPage;
-    private UserHomePO homePage;
+    private UserHomePO userHomePage;
     private UserOrderPO orderPage;
     private UserRewardPointPO rewardPointPage;
     private UserAddressPO addressPage;

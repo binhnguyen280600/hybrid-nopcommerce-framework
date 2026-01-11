@@ -7,15 +7,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.users.UserCustomerInfoPO;
-import pageObjects.users.UserHomePO;
-import pageObjects.users.UserLoginPageObject;
-import pageObjects.users.UserRegisterPO;
+import pageObjects.nopCommerce.users.UserCustomerInfoPO;
+import pageObjects.nopCommerce.users.UserHomePO;
+import pageObjects.nopCommerce.users.UserLoginPO;
+import pageObjects.nopCommerce.users.UserRegisterPO;
 
 public class Level_06_Page_Generator_01 extends BaseTest {
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
-    private UserLoginPageObject loginPage;
+    private UserLoginPO loginPage;
     private UserRegisterPO registerPage;
     private UserHomePO homePage;
     private String emailAddress, firstName, lastName, password, company;
@@ -57,7 +57,7 @@ public class Level_06_Page_Generator_01 extends BaseTest {
     public void User_02_Login() {
         registerPage.clickToLogoutPage();
 
-        loginPage = new UserLoginPageObject(driver);
+        loginPage = new UserLoginPO(driver);
 
         loginPage.clickToLoginPage();
         loginPage.enterToEmailTextbox(emailAddress);

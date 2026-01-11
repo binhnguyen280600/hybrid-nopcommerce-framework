@@ -54,7 +54,7 @@ public class Level_02_BasePage_II_Static_Method {
 
         basePage.clickToElement(driver, "//button[@id='register-button']");
 
-        Assert.assertEquals(basePage.getText(driver, "//div[@class='result']"), "Your registration completed");
+        Assert.assertEquals(basePage.getElementText(driver, "//div[@class='result']"), "Your registration completed");
     }
 
     @Test
