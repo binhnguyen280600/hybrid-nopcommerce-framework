@@ -1,5 +1,7 @@
 package commons;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,6 +14,15 @@ import java.util.Random;
 
 public class BaseTest {
     private WebDriver driver;
+    protected final Logger log;
+
+    public BaseTest() {
+        log = LogManager.getFormatterLogger(getClass());
+    }
+
+    public WebDriver getDriver() {
+        return this.driver;
+    }
 
     protected WebDriver getBrowserDriver(String browserName) {
         BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
@@ -56,11 +67,6 @@ public class BaseTest {
     protected int generateRandomNumber() {
         return new Random().nextInt(99999);
     }
-
-    protected void assertTrue(boolean condition) {
-        Assert.assertTrue(verifyTrue(condition));
-    }
-
 
     protected boolean verifyTrue(boolean condition) {
         boolean status = true;

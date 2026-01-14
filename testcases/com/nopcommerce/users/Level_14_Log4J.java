@@ -1,5 +1,6 @@
 package com.nopcommerce.users;
 
+
 import commons.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -10,7 +11,8 @@ import org.testng.annotations.Test;
 import pageObjects.nopCommerce.PageGenerator;
 import pageObjects.nopCommerce.users.*;
 
-public class Level_13_Verify extends BaseTest {
+
+public class Level_14_Log4J extends BaseTest {
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
@@ -29,46 +31,57 @@ public class Level_13_Verify extends BaseTest {
     // Testcases
     @Test
     public void User_01_Register() {
+        log.info("User_01_Register - STEP 01: Open Register page");
         registerPage = userHomePage.clickToRegisterPage();
 
-        verifyEquals(registerPage.getRegisterPageTitle(), "Register");
+        log.info("User_01_Register - STEP 02: Click to Female radio button");
         registerPage.clickToFemaleRadio();
+
+        log.info("User_01_Register - STEP 03: Enter to Firstname textbox with value" + firstName);
         registerPage.enterToFirstNameTextBox(firstName);
+
+        log.info("User_01_Register - STEP 04: Enter to Lastname textbox with value" + lastName);
         registerPage.enterToLastNameTextBox(lastName);
+
+        log.info("User_01_Register - STEP 05: Enter to Email Address textbox with value" + emailAddress);
         registerPage.enterToEmailTextBox(emailAddress);
+
+        log.info("User_01_Register - STEP 06: Enter to Company textbox with value" + company);
         registerPage.enterToCompanyTextBox(company);
+
+        log.info("User_01_Register - STEP 07: Enter to Password textbox with value" + password);
         registerPage.enterToPasswordTextBox(password);
+
+        log.info("User_01_Register - STEP 08: Enter to Confirm Password textbox with value" + password);
         registerPage.enterToConfirmPasswordTextBox(password);
+
+        log.info("User_01_Register - STEP 09: Click to Register button");
         registerPage.clickToRegisterButton();
 
+        log.info("User_01_Register - STEP 10: Enter to Firstname textbox with value" );
         Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Your registration completed");
-        verifyEquals(registerPage.getRegisterSuccessMessage(), "Your registration completed");
-
-        userHomePage = registerPage.clickToLogoutPage();
     }
-
-
 
     @Test
     public void User_02_Login() {
 
-
+        userHomePage = registerPage.clickToLogoutPage();
         userLoginPage = userHomePage.openLoginPage();
 
         userHomePage = userLoginPage.loginToSystem(emailAddress, password);
-        verifyTrue(userHomePage.isMyAccountLinkDisplayed());
+        Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_MyAccount() {
         customerInfoPage = userHomePage.clickToMyAccountPage();
 
-        verifyTrue(customerInfoPage.isGenderFemaleSelected());
+        Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
 
-        verifyEquals(customerInfoPage.getFirstNameTextboxValue(), firstName);
-        verifyEquals(customerInfoPage.getLastNameTextboxValue(), lastName);
-        verifyEquals(customerInfoPage.getEmailTextboxValue(), emailAddress);
-        verifyEquals(customerInfoPage.getCompanyTextboxValue(), company);
+        Assert.assertEquals(customerInfoPage.getFirstNameTextboxValue(), firstName);
+        Assert.assertEquals(customerInfoPage.getLastNameTextboxValue(), lastName);
+        Assert.assertEquals(customerInfoPage.getEmailTextboxValue(), emailAddress);
+        Assert.assertEquals(customerInfoPage.getCompanyTextboxValue(), company);
     }
 
     @Test
