@@ -29,10 +29,28 @@ public class Level_18_Undisplayed extends BaseTest {
         Assert.assertTrue(loginPage.isConfirmEmailTextboxDisplayed());
 
         //Case 2: Verify confirm Email textbox is not displayed
-        Assert.assertFalse(loginPage.isConfirmEmailTextboxUndisplayed());
+        Assert.assertFalse(loginPage.isConfirmEmailTextboxDisplayed());
 
         //Case 3: Verify confirm Email textbox is not displayed
         loginPage.clickToCloseIcon();
+        Assert.assertTrue(loginPage.isConfirmEmailTextboxUndisplayed());
+
+    }
+
+    @Test
+    public void TC_02_Element_Undisplayed() {
+        loginPage.enterToEmailTextbox("");
+
+        //Case 1: Verify confirm Email textbox is displayed
+        Assert.assertFalse(loginPage.isConfirmEmailTextboxUndisplayed());
+
+        //Case 2: Verify confirm Email textbox is not displayed
+        Assert.assertTrue(loginPage.isConfirmEmailTextboxUndisplayed());
+
+        //Case 3: Verify confirm Email textbox is not displayed
+        loginPage.clickToCloseIcon();
+        Assert.assertTrue(loginPage.isConfirmEmailTextboxUndisplayed());
+
     }
         @AfterClass
         public void afterClass () {

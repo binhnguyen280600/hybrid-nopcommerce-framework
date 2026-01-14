@@ -286,11 +286,11 @@ public class BasePage {
         List<WebElement> elements = getListElement(driver, locator);
         overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
 
-        if (elements.size() == 0) { //Case 1: Verify confirm Email textbox is displayed
+        if (elements.size() == 0) { //Case 3: Verify confirm Email textbox is not displayed
             return true;
         } else if (elements.size() > 0 && !elements.get(0).isDisplayed()) { //Case 2: Verify confirm Email textbox is not displayed
             return true;
-        } else { //Case 3: Verify confirm Email textbox is not displayed
+        } else { //Case 1: Verify confirm Email textbox is displayed
             return false;
         }
     }
