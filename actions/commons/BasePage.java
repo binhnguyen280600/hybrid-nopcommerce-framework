@@ -400,35 +400,53 @@ public class BasePage {
     }
 
     public void waitForElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator, String... restParameter) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(castParameter(locator, restParameter))));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(castParameter(locator, restParameter))));
+    }
+
+    public void waitForElementAttribute(WebDriver driver, String locator, String attributeName, String attributeValue) {
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.attributeToBe(getByLocator(locator), attributeName, attributeValue));
+    }
+
+    public void waitForElementAttribute(WebDriver driver, String locator, String attributeName, String attributeValue,String... restParameter) {
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.attributeToBe(getByLocator(castParameter(locator, restParameter)), attributeName, attributeValue));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator, String... restParameter) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(getByLocator(castParameter(locator, restParameter))));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.elementToBeSelected(getByLocator(castParameter(locator, restParameter))));
     }
 
     public void waitForElementPresence(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.presenceOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator, String... restParameter) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator(castParameter(locator, restParameter))));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.elementToBeClickable(getByLocator(castParameter(locator, restParameter))));
     }
 
     public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
@@ -467,4 +485,39 @@ public class BasePage {
     }
 
 
+    public void enterToTextboxByID(WebDriver driver, String textboxID, String value) {
+        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID);
+        sendKeysToElement(driver, UserBasePageUI.TEXTBOX_BY_ID, value, textboxID);
+    }
+
+    public void clickToButtonByText(WebDriver driver, String buttonText) {
+        waitForElementClickable(driver, UserBasePageUI.BUTTON_BY_TEXT, buttonText);
+        clickToElement(driver, UserBasePageUI.BUTTON_BY_TEXT, buttonText);
+
+    }
+
+    public void clickToRadioByID(WebDriver driver, String radioID) {
+        waitForElementClickable(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+        checkToCheckboxRadio(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+    }
+
+    public void clickToCheckboxByID(WebDriver driver, String checkboxID) {
+        waitForElementClickable(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+        checkToCheckboxRadio(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+    }
+
+    public String getTextboxValueByID(WebDriver driver, String textboxID) {
+        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID, textboxID);
+        return getElementAttribute(driver, UserBasePageUI.TEXTBOX_BY_ID, "value", textboxID);
+    }
+
+    public boolean isRadioByIDSelected(WebDriver driver, String radioID) {
+        waitForElementSelected(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+        return isElementSelected(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+    }
+
+    public boolean isCheckboxByIDSelected(WebDriver driver, String checkboxID) {
+        waitForElementSelected(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+        return isElementSelected(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+    }
 }
