@@ -449,6 +449,18 @@ public class BasePage {
                 .until(ExpectedConditions.elementToBeClickable(getByLocator(castParameter(locator, restParameter))));
     }
 
+    public Set<Cookie> getAllCookies(WebDriver driver) {
+        return driver.manage().getCookies();
+    }
+
+    public void setCookies(WebDriver driver, Set<Cookie> cookies) throws InterruptedException {
+        for (Cookie cookie : cookies) {
+            driver.manage().addCookie(cookie);
+        }
+
+        sleepInSeconds(3);
+    }
+
     public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
         String filePath = GlobalConstants.UPLOAD_PATH;
         String fullFileName = "";
@@ -486,7 +498,7 @@ public class BasePage {
 
 
     public void enterToTextboxByID(WebDriver driver, String textboxID, String value) {
-        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID);
+        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID, textboxID);
         sendKeysToElement(driver, UserBasePageUI.TEXTBOX_BY_ID, value, textboxID);
     }
 

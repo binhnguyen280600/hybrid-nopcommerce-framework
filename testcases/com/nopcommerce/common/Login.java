@@ -1,21 +1,18 @@
-package com.nopcommerce.users;
+package com.nopcommerce.common;
 
 import commons.BaseTest;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import jdk.jfr.Description;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pageObjects.nopCommerce.PageGenerator;
 import pageObjects.nopCommerce.users.*;
 
-public class Level_19_Pattern_Object extends BaseTest {
+import java.util.Set;
+
+public class Login extends BaseTest {
     @Parameters("browser")
-    @BeforeClass
+    @BeforeTest
     public void beforeClass(String browserName) {
         driver = getBrowserDriver(browserName);
 
@@ -27,10 +24,6 @@ public class Level_19_Pattern_Object extends BaseTest {
         company = "Goyoung";
         emailAddress = "nhubinh" + generateRandomNumber() + "@gmail.com";
 
-    }
-
-    @Test
-    public void User_01_Register() {
         registerPage = userHomePage.clickToRegisterPage();
 
         registerPage.clickToRadioByID(driver, "gender-female");
@@ -49,50 +42,29 @@ public class Level_19_Pattern_Object extends BaseTest {
         registerPage.clickToButtonByText(driver, "Register");
 
         Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Your registration completed");
-    }
-
-    @Description("Login to application")
-    @Severity(SeverityLevel.MINOR)
-    @Test
-    public void User_02_Login() {
 
         userHomePage = registerPage.clickToLogoutPage();
+
         userLoginPage = userHomePage.openLoginPage();
-
         userLoginPage.enterToTextboxByID(driver,"Email", emailAddress);
-
         userLoginPage.enterToTextboxByID(driver,"Password", password);
 
-        userLoginPage.clickToButtonByText(driver, "Log in");
+        registerPage.clickToButtonByText(driver, "Log in");
 
         userHomePage = PageGenerator.getUserHomePage(driver);
 
         Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
-    }
 
-    @Description("Verify My Account Info")
-    @Severity(SeverityLevel.CRITICAL)
-    @Test
-    public void User_03_MyAccount() {
-        customerInfoPage = userHomePage.clickToMyAccountPage();
+        // Get Cookies
+        nopCommercecookies = userHomePage.getAllCookies(driver);
 
-        Assert.assertTrue(customerInfoPage.isGenderFemaleSelected());
-
-        Assert.assertTrue(customerInfoPage.isRadioByIDSelected(driver, "gender-female"));
-
-        Assert.assertEquals(customerInfoPage.getTextboxValueByID(driver, "FirstName"), firstName);
-        Assert.assertEquals(customerInfoPage.getTextboxValueByID(driver, "LastName"), lastName);
-        Assert.assertEquals(customerInfoPage.getTextboxValueByID(driver, "Email"), emailAddress);
-        Assert.assertEquals(customerInfoPage.getTextboxValueByID(driver, "Company") , company);
-
-        Assert.assertTrue(customerInfoPage.isCheckboxByIDSelected(driver, "NewsLetterSubscriptions_0__IsActive"));
-    }
-
-
-    @AfterClass
-    public void afterClass() {
         driver.quit();
+
     }
+
+
+
+
 
     private WebDriver driver;
     private UserCustomerInfoPO customerInfoPage;
@@ -103,4 +75,5 @@ public class Level_19_Pattern_Object extends BaseTest {
     private UserRewardPointPO rewardPointPage;
     private UserAddressPO addressPage;
     private String emailAddress, firstName, lastName, password, company;
+    public static Set<Cookie> nopCommercecookies;
 }

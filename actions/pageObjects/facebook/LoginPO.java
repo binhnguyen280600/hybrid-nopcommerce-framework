@@ -1,9 +1,8 @@
 package pageObjects.facebook;
 
 import commons.BasePage;
-import commons.BaseTest;
 import org.openqa.selenium.WebDriver;
-import pageUI.facebook.LoginPageUI;
+import pageUIs.facebook.LoginPageUI;
 
 public class LoginPO extends BasePage {
     WebDriver driver;

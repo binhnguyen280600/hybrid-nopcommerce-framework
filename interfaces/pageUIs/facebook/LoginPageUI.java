@@ -1,4 +1,4 @@
-package pageUI.facebook;
+package pageUIs.facebook;
 
 public class LoginPageUI {
         public static final String CREATE_NEW_ACCOUNT_BUTTON = "css=a[data-testid='open-registration-form-button']";

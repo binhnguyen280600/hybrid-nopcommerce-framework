@@ -1,13 +1,10 @@
 package pageObjects.jquery;
 
 import commons.BasePage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pageUI.jquery.HomePageUI;
-import pageUIs.nopCommerce.UserBasePageUI;
-import pageUIs.nopCommerce.users.UserHomePageUI;
+import pageUIs.jquery.HomePageUI;
 
 import java.util.ArrayList;
 import java.util.List;
