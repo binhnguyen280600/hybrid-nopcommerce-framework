@@ -1,6 +1,5 @@
 package commons;
 
-import com.google.common.base.Verify;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -12,13 +11,13 @@ import pageObjects.nopCommerce.users.UserAddressPO;
 import pageObjects.nopCommerce.users.UserCustomerInfoPO;
 import pageObjects.nopCommerce.users.UserOrderPO;
 import pageObjects.nopCommerce.users.UserRewardPointPO;
-import pageUIs.nopCommerce.UserBasePageUI;
+import pageUIs.nopCommerce.BasePageUI;
 import pageUIs.nopCommerce.users.UserSidebarPageUI;
+import pageUIs.orangehrm.BasePUI;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 
 public class BasePage {
@@ -150,6 +149,8 @@ public class BasePage {
             by = By.className(prefixLocator.substring(6));
         } else if (prefixLocator.toUpperCase().startsWith("TAGNAME")) {
             by = By.tagName(prefixLocator.substring(8));
+        } else if (prefixLocator.toUpperCase().startsWith("NAME")) {
+            by = By.name(prefixLocator.substring(5));
         } else if (prefixLocator.toUpperCase().startsWith("XPATH")) {
             by = By.xpath(prefixLocator.substring(6));
         } else {
@@ -226,6 +227,10 @@ public class BasePage {
 
     public String getElementAttribute(WebDriver driver, String locator, String attributeName, String... restParameter) {
         return getElement(driver, castParameter(locator, restParameter)).getAttribute(attributeName);
+    }
+
+    public Dimension getElementSize(WebDriver driver, String locator) {
+        return getElement(driver, locator).getSize();
     }
 
     public String getElementText(WebDriver driver, String locator) {
@@ -404,6 +409,11 @@ public class BasePage {
                 .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
+    public boolean waitForListElementVisible(WebDriver driver, String locator) {
+        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                .until(ExpectedConditions.invisibilityOfAllElements(getListElement(driver, locator)));
+    }
+
     public void waitForElementVisible(WebDriver driver, String locator, String... restParameter) {
         new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
                 .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(castParameter(locator, restParameter))));
@@ -468,68 +478,72 @@ public class BasePage {
             fullFileName += filePath + file + "\n";
         }
         fullFileName = fullFileName.trim();
-        getElement(driver, UserBasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+        getElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
     }
 
     //Only use for Level_07
     public UserRewardPointPO openRewardPointPage(WebDriver driver) {
-        waitForElementClickable(driver, UserBasePageUI.REWARD_POINT_LINK);
-        clickToElement(driver, UserBasePageUI.REWARD_POINT_LINK);
+        waitForElementClickable(driver, BasePageUI.REWARD_POINT_LINK);
+        clickToElement(driver, BasePageUI.REWARD_POINT_LINK);
         return PageGenerator.getUserRewardPointPage(driver);
     }
 
     public UserCustomerInfoPO openCustomerInfoPage(WebDriver driver) {
-        waitForElementClickable(driver, UserBasePageUI.CUSTOMER_INFO_LINK);
-        clickToElement(driver, UserBasePageUI.CUSTOMER_INFO_LINK);
+        waitForElementClickable(driver, BasePageUI.CUSTOMER_INFO_LINK);
+        clickToElement(driver, BasePageUI.CUSTOMER_INFO_LINK);
         return PageGenerator.getUserCustomerInfoPage(driver);
     }
 
     public UserAddressPO openAddressPage(WebDriver driver) {
         waitForElementClickable(driver, UserSidebarPageUI.ADDRESS_LINK);
-        clickToElement(driver, UserBasePageUI.ADDRESS_LINK);
+        clickToElement(driver, BasePageUI.ADDRESS_LINK);
         return PageGenerator.getUserAddressPage(driver);
     }
 
     public UserOrderPO openOrderPage(WebDriver driver) {
         waitForElementClickable(driver, UserSidebarPageUI.ORDER_PAGE_LINK);
-        clickToElement(driver, UserBasePageUI.ORDER_PAGE_LINK);
+        clickToElement(driver, BasePageUI.ORDER_PAGE_LINK);
         return PageGenerator.getUserOrderPage(driver);
     }
 
 
     public void enterToTextboxByID(WebDriver driver, String textboxID, String value) {
-        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID, textboxID);
-        sendKeysToElement(driver, UserBasePageUI.TEXTBOX_BY_ID, value, textboxID);
+        waitForElementVisible(driver, BasePageUI.TEXTBOX_BY_ID, textboxID);
+        sendKeysToElement(driver, BasePageUI.TEXTBOX_BY_ID, value, textboxID);
     }
 
     public void clickToButtonByText(WebDriver driver, String buttonText) {
-        waitForElementClickable(driver, UserBasePageUI.BUTTON_BY_TEXT, buttonText);
-        clickToElement(driver, UserBasePageUI.BUTTON_BY_TEXT, buttonText);
+        waitForElementClickable(driver, BasePageUI.BUTTON_BY_TEXT, buttonText);
+        clickToElement(driver, BasePageUI.BUTTON_BY_TEXT, buttonText);
 
     }
 
     public void clickToRadioByID(WebDriver driver, String radioID) {
-        waitForElementClickable(driver, UserBasePageUI.RADIO_BY_ID, radioID);
-        checkToCheckboxRadio(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+        waitForElementClickable(driver, BasePageUI.RADIO_BY_ID, radioID);
+        checkToCheckboxRadio(driver, BasePageUI.RADIO_BY_ID, radioID);
     }
 
     public void clickToCheckboxByID(WebDriver driver, String checkboxID) {
-        waitForElementClickable(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
-        checkToCheckboxRadio(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+        waitForElementClickable(driver, BasePageUI.CHECKBOX_BY_ID, checkboxID);
+        checkToCheckboxRadio(driver, BasePageUI.CHECKBOX_BY_ID, checkboxID);
     }
 
     public String getTextboxValueByID(WebDriver driver, String textboxID) {
-        waitForElementVisible(driver, UserBasePageUI.TEXTBOX_BY_ID, textboxID);
-        return getElementAttribute(driver, UserBasePageUI.TEXTBOX_BY_ID, "value", textboxID);
+        waitForElementVisible(driver, BasePageUI.TEXTBOX_BY_ID, textboxID);
+        return getElementAttribute(driver, BasePageUI.TEXTBOX_BY_ID, "value", textboxID);
     }
 
     public boolean isRadioByIDSelected(WebDriver driver, String radioID) {
-        waitForElementSelected(driver, UserBasePageUI.RADIO_BY_ID, radioID);
-        return isElementSelected(driver, UserBasePageUI.RADIO_BY_ID, radioID);
+        waitForElementSelected(driver, BasePageUI.RADIO_BY_ID, radioID);
+        return isElementSelected(driver, BasePageUI.RADIO_BY_ID, radioID);
     }
 
     public boolean isCheckboxByIDSelected(WebDriver driver, String checkboxID) {
-        waitForElementSelected(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
-        return isElementSelected(driver, UserBasePageUI.CHECKBOX_BY_ID, checkboxID);
+        waitForElementSelected(driver, BasePageUI.CHECKBOX_BY_ID, checkboxID);
+        return isElementSelected(driver, BasePageUI.CHECKBOX_BY_ID, checkboxID);
+    }
+
+    public void waitAllLoadingIconInvisible(WebDriver driver) {
+        waitForListElementVisible(driver, BasePUI.LOADING_ICON);
     }
 }

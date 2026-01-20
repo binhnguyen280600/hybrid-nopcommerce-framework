@@ -3,6 +3,7 @@ package pageObjects.orangehrm.pim.employee;
 import commons.BasePage;
 import org.openqa.selenium.WebDriver;
 import pageObjects.orangehrm.PageGenerator;
+import pageUIs.orangehrm.pim.employee.AddNewPUI;
 
 public class AddNewEmployeePO extends BasePage {
 
@@ -13,17 +14,26 @@ public class AddNewEmployeePO extends BasePage {
     }
 
 
-    public void enterToFirstNameTextbox(String s) {
+    public void enterToFirstNameTextbox(String firstName) {
+        waitForElementVisible(driver, AddNewPUI.FIRST_NAME_TEXTBOX);
+        sendKeysToElement(driver, AddNewPUI.FIRST_NAME_TEXTBOX, firstName);
+
     }
 
-    public void enterToLastNameTextbox(String s) {
+    public void enterToLastNameTextbox(String lastName) {
+        waitForElementVisible(driver, AddNewPUI.LAST_NAME_TEXTBOX);
+        sendKeysToElement(driver, AddNewPUI.LAST_NAME_TEXTBOX, lastName);
     }
 
     public String getEmployeeID() {
-        return null;
+        waitForElementVisible(driver, AddNewPUI.EMPLOYEE_ID_TEXTBOX);
+        return getElementAttribute(driver, AddNewPUI.EMPLOYEE_ID_TEXTBOX, "value");
     }
 
-    public PersonalDetailsPO clickToSaveButton() {
+    public PersonalDetailsPO clickToSaveButtonAtEmployeeContainer() {
+        waitForElementVisible(driver, AddNewPUI.SAVE_BUTTON_AT_ADD_EMPLOYEE_CONTAINER);
+        clickToElement(driver, AddNewPUI.SAVE_BUTTON_AT_ADD_EMPLOYEE_CONTAINER);
+        waitAllLoadingIconInvisible(driver);
         return PageGenerator.getPersonalDetailsPage(driver);
     }
 }

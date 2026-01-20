@@ -39,7 +39,7 @@ public class BaseTest {
             default:
                 throw new RuntimeException("Browser name is not valid");
         }
-        driver.get("http://localhost:8082/");
+        driver.get("http://localhost:8080/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         return driver;
     }

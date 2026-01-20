@@ -1,7 +1,9 @@
 package com.orangehrm.pim;
 
 import commons.BaseTest;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -20,7 +22,8 @@ public class PIM_01_Employee extends BaseTest {
     private EmployeeListPO employeeListPage;
     private PersonalDetailsPO personalDetailsPage;
     private AddNewEmployeePO addNewEmployeePage;
-    private String employeeID;
+    private String employeeID, firstName, lastName;
+    private String avatarImageName = "Hue.jpg";
 
     @Parameters({"browser", "url"})
     @BeforeClass
@@ -28,6 +31,9 @@ public class PIM_01_Employee extends BaseTest {
         driver = getBrowserDriver(browserName);
 
         loginPage = PageGenerator.getLoginPage(driver);
+
+        firstName = "John";
+        lastName = "Wick";
 
         loginPage.enterToUsernameTextbox("nhubinh@gmail.com");
         loginPage.EnterToPasswordTextbox("Haveaniceday1@");
@@ -41,15 +47,32 @@ public class PIM_01_Employee extends BaseTest {
 
         addNewEmployeePage = employeeListPage.clickToAddEmployeeButton();
 
-        addNewEmployeePage.enterToFirstNameTextbox("");
-        addNewEmployeePage.enterToLastNameTextbox("");
+        addNewEmployeePage.enterToFirstNameTextbox(firstName);
+        addNewEmployeePage.enterToLastNameTextbox(lastName);
         employeeID = addNewEmployeePage.getEmployeeID();
 
-        personalDetailsPage = addNewEmployeePage.clickToSaveButton();
+        System.out.println("Employee ID = " + employeeID);
+
+        personalDetailsPage = addNewEmployeePage.clickToSaveButtonAtEmployeeContainer();
     }
 
     @Test
     public void Employee_02_Upload_Avatar() {
+
+        personalDetailsPage.clickToEmployeeAvatarImage();
+
+        //lấy ra height/ width của element (avatar A)
+        Dimension beforeUpload = personalDetailsPage.getAvatarSize();
+
+        personalDetailsPage.uploadMultipleFiles(driver, avatarImageName);
+
+        personalDetailsPage.clickToSaveButtonAtProfilePictureContainer();
+
+        personalDetailsPage.isSuccessMessageIsDisplayed();
+
+        personalDetailsPage.waitAllLoadingIconInvisible(driver);
+
+        Assert.assertTrue(personalDetailsPage.isProfileAvatarUpdateSuccess(beforeUpload));
 
     }
 
