@@ -1,9 +1,7 @@
 package pageObjects.orangehrm.pim.employee;
 
-import commons.BasePage;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import pageUIs.orangehrm.pim.employee.EmployeeTabs;
 import pageUIs.orangehrm.pim.employee.PersonalDetailsPUI;
 
 public class PersonalDetailsPO extends EmployeeTabs {
