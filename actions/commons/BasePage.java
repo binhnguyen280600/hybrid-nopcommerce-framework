@@ -14,6 +14,7 @@ import pageObjects.nopCommerce.users.UserRewardPointPO;
 import pageUIs.nopCommerce.BasePageUI;
 import pageUIs.nopCommerce.users.UserSidebarPageUI;
 import pageUIs.orangehrm.BasePUI;
+import pageUIs.orangehrm.pim.employee.PersonalDetailsPUI;
 
 import java.time.Duration;
 import java.util.List;
@@ -172,7 +173,14 @@ public class BasePage {
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String valueToSendkey) {
-        getElement(driver, locator).clear();
+//        getElement(driver, locator).clear();
+        Keys key = null;
+        if (GlobalConstants.OS_NAME.startsWith("Windows")) {
+            key = Keys.CONTROL;
+        } else {
+            key = Keys.COMMAND;
+        }
+        getElement(driver, locator).sendKeys(Keys.chord(key, "a", Keys.BACK_SPACE));
         getElement(driver, locator).sendKeys(valueToSendkey);
     }
 
@@ -200,7 +208,7 @@ public class BasePage {
         return new Select(getElement(driver, locator)).isMultiple();
     }
 
-    public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childItemLocator, String expectedItem) throws InterruptedException {
+    public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childItemLocator, String expectedItem)  {
         driver.findElement(getByLocator(parentLocator)).click();
         sleepInSecond(2);
         List<WebElement> allItems = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
@@ -363,6 +371,11 @@ public class BasePage {
 
     public void clickToElementByJS(WebDriver driver, String locator) throws InterruptedException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", getElement(driver, locator));
+        sleepInSeconds(3);
+    }
+
+    public void clickToElementByJS(WebDriver driver, String locator, String...restParameter) throws InterruptedException {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", getElement(driver, castParameter(locator, restParameter)));
         sleepInSeconds(3);
     }
 
@@ -543,7 +556,13 @@ public class BasePage {
         return isElementSelected(driver, BasePageUI.CHECKBOX_BY_ID, checkboxID);
     }
 
+    //Only use for OrangeHRM project
     public void waitAllLoadingIconInvisible(WebDriver driver) {
         waitForListElementVisible(driver, BasePUI.LOADING_ICON);
+    }
+
+    public boolean isSuccessMessageIsDisplayed(WebDriver driver) {
+        waitForElementVisible(driver, BasePUI.SUCCESS_MESSAGE);
+        return isElementDisplayed(driver, BasePUI.SUCCESS_MESSAGE);
     }
 }

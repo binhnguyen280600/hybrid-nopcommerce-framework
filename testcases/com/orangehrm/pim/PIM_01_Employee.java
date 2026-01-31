@@ -22,7 +22,8 @@ public class PIM_01_Employee extends BaseTest {
     private EmployeeListPO employeeListPage;
     private PersonalDetailsPO personalDetailsPage;
     private AddNewEmployeePO addNewEmployeePage;
-    private String employeeID, firstName, lastName;
+    private String employeeID, firstName, lastName, editFirstName, editLastName;
+    private String LicenseNumber, LicenseExpiryDate, nationality, maritalStatus, dateOfBirth, gender;
     private String avatarImageName = "Hue.jpg";
 
     @Parameters({"browser", "url"})
@@ -34,6 +35,14 @@ public class PIM_01_Employee extends BaseTest {
 
         firstName = "John";
         lastName = "Wick";
+        editFirstName = "Binh";
+        editLastName = "Tester";
+        LicenseNumber = "012345678";
+        LicenseExpiryDate = "2030-10-10";
+        nationality = "American";
+        maritalStatus = "Married";
+        dateOfBirth = "2000-01-15";
+        gender = "Male";
 
         loginPage.enterToUsernameTextbox("nhubinh@gmail.com");
         loginPage.EnterToPasswordTextbox("Haveaniceday1@");
@@ -44,15 +53,12 @@ public class PIM_01_Employee extends BaseTest {
     public void Employee_01_Add_New() {
 
         employeeListPage = dashboardPage.clickToPIMPage();
-
         addNewEmployeePage = employeeListPage.clickToAddEmployeeButton();
 
         addNewEmployeePage.enterToFirstNameTextbox(firstName);
         addNewEmployeePage.enterToLastNameTextbox(lastName);
+
         employeeID = addNewEmployeePage.getEmployeeID();
-
-        System.out.println("Employee ID = " + employeeID);
-
         personalDetailsPage = addNewEmployeePage.clickToSaveButtonAtEmployeeContainer();
     }
 
@@ -68,7 +74,7 @@ public class PIM_01_Employee extends BaseTest {
 
         personalDetailsPage.clickToSaveButtonAtProfilePictureContainer();
 
-        personalDetailsPage.isSuccessMessageIsDisplayed();
+        personalDetailsPage.isSuccessMessageIsDisplayed(driver);
 
         personalDetailsPage.waitAllLoadingIconInvisible(driver);
 
@@ -77,7 +83,40 @@ public class PIM_01_Employee extends BaseTest {
     }
 
     @Test
-    public void Employee_03_Personal_Details() {
+    public void Employee_03_Personal_Details() throws InterruptedException {
+        personalDetailsPage.openPersonalDetailsPage();
+
+        personalDetailsPage.enterToFirstNameTextbox(editFirstName);
+        personalDetailsPage.enterToLastNameTextbox(editLastName);
+
+        Assert.assertEquals(personalDetailsPage.getEmployeeID(), employeeID);
+
+        personalDetailsPage.enterToDriverLicenseTextbox(LicenseNumber);
+        personalDetailsPage.enterToLicenseExpiryDateTextbox(LicenseExpiryDate);
+        personalDetailsPage.selectNationalityDropdown(nationality);
+        personalDetailsPage.selectMaritalStatusDropdown(maritalStatus);
+
+        personalDetailsPage.enterToDateOfBirthTextbox(dateOfBirth);
+
+        personalDetailsPage.selectGenderMaleRadioButton(gender);
+
+        personalDetailsPage.clickSaveButtonAtPersonalDetailContainer();
+
+        Assert.assertTrue(personalDetailsPage.isSuccessMessageIsDisplayed(driver));
+
+        personalDetailsPage.waitAllLoadingIconInvisible(driver);
+
+        //Verify
+
+        Assert.assertEquals(personalDetailsPage.getFirstNameTextboxValue(), editFirstName);
+        Assert.assertEquals(personalDetailsPage.getLastNameTextboxValue(), editLastName);
+        Assert.assertEquals(personalDetailsPage.getEmployeeID(), employeeID);
+        Assert.assertEquals(personalDetailsPage.getDriverLicenseTextboxValue(), LicenseNumber);
+        Assert.assertEquals(personalDetailsPage.getLicenseExpiryDateTextboxValue(), LicenseExpiryDate);
+        Assert.assertEquals(personalDetailsPage.getNationalityDropdownValue(), nationality);
+        Assert.assertEquals(personalDetailsPage.getMarialStatusDropdownValue(), maritalStatus);
+        Assert.assertEquals(personalDetailsPage.getDateOfBirthTextboxValue(), dateOfBirth);
+        Assert.assertTrue(personalDetailsPage.isGenderMaleRadioSelected(""));
 
     }
 

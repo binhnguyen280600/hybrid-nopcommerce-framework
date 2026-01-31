@@ -15,18 +15,21 @@ public class EmployeeTabs extends BasePage {
     public PersonalDetailsPO openPersonalDetailsPage() {
         waitForElementVisible(driver, EmployeeTabsPUI.PERSONAL_DETAIL_LINK);
         clickToElement(driver, EmployeeTabsPUI.PERSONAL_DETAIL_LINK);
+        waitAllLoadingIconInvisible(driver);
         return PageGenerator.getPersonalDetailsPage(driver);
     }
 
     public ContactDetailsPO openContactDetailsPage() {
         waitForElementVisible(driver, EmployeeTabsPUI.CONTACT_DETAIL_LINK);
         clickToElement(driver, EmployeeTabsPUI.CONTACT_DETAIL_LINK);
+        waitAllLoadingIconInvisible(driver);
         return PageGenerator.getContactDetailsPage(driver);
     }
 
     public EmergencyContactsPO openEmergencyContactPage() {
         waitForElementVisible(driver, EmployeeTabsPUI.EMERGENCY_CONTACT_LINK);
         clickToElement(driver, EmployeeTabsPUI.EMERGENCY_CONTACT_LINK);
+        waitAllLoadingIconInvisible(driver);
         return PageGenerator.getEmercencyContactPage(driver);
     }
 }

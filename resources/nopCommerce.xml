@@ -5,14 +5,20 @@
         <listener class-name="commons.MethodListener"/>
         <listener class-name="reportConfigs.AllureListener"/>
     </listeners>
-    <parameter name="userUrl" value="http://localhost:8082/"/>
+    <parameter name="userUrl" value="https://www.facebook.com/"/>
     <parameter name="adminUrl" value="https://admin-demo.nopcommerce.com"/>
 
-    <test name="Run on FireFox browser">
+    <test name="Run on FireFox">
+        <parameter name="browser" value="firefox" />
+        <classes>
+            <class name="com.nopcommerce.users.Level_21_Browser_Config"/>
+        </classes>
+    </test>
+
+    <test name="Run on Chrome">
         <parameter name="browser" value="chrome" />
         <classes>
-            <class name="com.nopcommerce.common.Login"/>
-            <class name="com.nopcommerce.users.Level_20_Share_State"/>
+            <class name="com.nopcommerce.users.Level_21_Browser_Config"/>
         </classes>
     </test>
 
