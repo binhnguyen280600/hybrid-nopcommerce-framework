@@ -16,7 +16,7 @@ public class BasePageUI {
 
     public static final String RADIO_BY_ID = "xpath=//input[@id='%s']";
 
-    public static final String CHECKBOX_BY_ID = "xpath=2";
+    public static final String CHECKBOX_BY_ID = "id=%s";
 
 
 

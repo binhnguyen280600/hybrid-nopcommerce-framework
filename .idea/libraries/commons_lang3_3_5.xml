@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="commons-lang3-3.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libraries/commons-lang3-3.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libraries/javafaker-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libraries/snakeyaml-1.23.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
