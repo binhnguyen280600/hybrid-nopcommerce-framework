@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.nopCommerce.PageGenerator;
 import pageUIs.nopCommerce.users.UserLoginPageUI;
 import pageUIs.nopCommerce.users.UserRegisterPageUI;
+import pojo.UserInfo;
 
 public class UserRegisterPO extends BasePage {
     private WebDriver driver;
@@ -83,4 +84,14 @@ public class UserRegisterPO extends BasePage {
     }
 
 
+    public void enterToRegisterForm(UserInfo userInfo) {
+        clickToFemaleRadio();
+        enterToFirstNameTextBox(userInfo.getFirstName());
+        enterToLastNameTextBox(userInfo.getLastName());
+        enterToEmailTextBox(userInfo.getEmailAddress());
+        enterToCompanyTextBox(userInfo.getCompany());
+        clickToCheckboxByID(driver, "NewsLetterSubscriptions_0__IsActive");
+        enterToPasswordTextBox(userInfo.getPassword());
+        enterToConfirmPasswordTextBox(userInfo.getPassword());
+    }
 }

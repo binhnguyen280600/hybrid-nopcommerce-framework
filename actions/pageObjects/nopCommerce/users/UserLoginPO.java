@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import pageObjects.nopCommerce.PageGenerator;
 import pageUIs.nopCommerce.users.UserLoginPageUI;
+import pojo.UserInfo;
 
 public class UserLoginPO extends BasePage {
 
@@ -49,4 +50,11 @@ public class UserLoginPO extends BasePage {
     }
 
 
+    public UserHomePO enterToLoginForm(UserInfo userInfo) {
+        enterToEmailTextbox(userInfo.getEmailAddress());
+        enterToPasswordTextBox(userInfo.getPassword());
+        clickToLoginButton();
+        return PageGenerator.getUserHomePage(driver);
+
+    }
 }

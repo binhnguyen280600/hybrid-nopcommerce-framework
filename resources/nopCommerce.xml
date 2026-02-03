@@ -11,7 +11,7 @@
     <test name="Run on FireFox">
         <parameter name="browser" value="firefox" />
         <classes>
-            <class name="com.nopcommerce.users.Level_24_Data_Faker"/>
+            <class name="com.nopcommerce.users.Level_25_Manage_Data_04_JSON"/>
         </classes>
     </test>
 
