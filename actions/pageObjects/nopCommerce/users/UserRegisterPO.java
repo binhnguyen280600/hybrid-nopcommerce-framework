@@ -8,6 +8,8 @@ import pageUIs.nopCommerce.users.UserLoginPageUI;
 import pageUIs.nopCommerce.users.UserRegisterPageUI;
 import pojo.UserInfo;
 
+import java.util.List;
+
 public class UserRegisterPO extends BasePage {
     private WebDriver driver;
 
@@ -93,5 +95,9 @@ public class UserRegisterPO extends BasePage {
         clickToCheckboxByID(driver, "NewsLetterSubscriptions_0__IsActive");
         enterToPasswordTextBox(userInfo.getPassword());
         enterToConfirmPasswordTextBox(userInfo.getPassword());
+    }
+
+    public void isLanguageDisplayed(List<String> skillTree) {
+        for(String skill : skillTree);
     }
 }

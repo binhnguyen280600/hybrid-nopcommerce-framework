@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="commons-compress-1.25.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libExcel/commons-compress-1.25.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libExcel/poi-ooxml-lite-5.2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
