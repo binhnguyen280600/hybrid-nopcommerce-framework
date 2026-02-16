@@ -43,6 +43,6 @@ public class GlobalConstants {
 
     // Data Test/ Environment
     public static final String DATA_TEST_PATH = PROJECT_PATH + SEPARATOR + "testdata" + SEPARATOR;
-    public static final String ENVIRONMENT_CONFIG_PATH = PROJECT_PATH + SEPARATOR + "environmentConfig" + SEPARATOR;
+    public static final String ENVIRONMENT_CONFIG_PATH = PROJECT_PATH + SEPARATOR + "envConfig" + SEPARATOR;
 
 }

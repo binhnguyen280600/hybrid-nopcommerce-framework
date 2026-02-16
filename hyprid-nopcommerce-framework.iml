@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/testcases" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/javaSDET" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/testdata" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/envConfig" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -32,5 +33,7 @@
     <orderEntry type="library" name="commons-collections4-4.4" level="project" />
     <orderEntry type="library" name="commons-collections4-4.4 (2)" level="project" />
     <orderEntry type="library" name="commons-codec-1.16.0 (3)" level="project" />
+    <orderEntry type="library" name="owner-1.0.10" level="project" />
+    <orderEntry type="library" name="commons-codec-1.11" level="project" />
   </component>
 </module>

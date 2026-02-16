@@ -32,7 +32,7 @@ public class BaseTest {
         return this.driver;
     }
 
-    protected WebDriver getBrowserDriver(String browserName) {
+    protected WebDriver getBrowserDriver(String browserName, String url) {
         BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
         switch (browserList) {
             case FIREFOX:
@@ -71,12 +71,31 @@ public class BaseTest {
             default:
                 throw new RuntimeException("Browser name is not valid");
         }
-        driver.get("http://localhost:8082/");
+        driver.get(url);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         return driver;
     }
 
-    protected WebDriver getBrowserDriver(String browserName, String url) {
+    private String getUrlByEnvironmentName(String environmentName) {
+        String url;
+        switch (environmentName) {
+            case "dev":
+                url = "https://demo.nopcommerce.com/";
+                break;
+            case "testing":
+                url = "https://testing.nopcommerce.com/";
+                break;
+            case "staging":
+                url = "https://staging.nopcommerce.com/";
+                break;
+            default:
+                throw new RuntimeException("Environment name is not valid.");
+        }
+        return url;
+
+    }
+
+    protected WebDriver getBrowserDriver(String browserName) {
         BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
         switch (browserList) {
             case FIREFOX:
@@ -91,7 +110,7 @@ public class BaseTest {
             default:
                 throw new RuntimeException("Browser name is not valid");
         }
-        driver.get(url);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         driver.manage().window().maximize();
         return driver;

@@ -5,13 +5,14 @@
         <listener class-name="commons.MethodListener"/>
         <listener class-name="reportConfigs.AllureListener"/>
     </listeners>
-    <parameter name="userUrl" value="http://localhost:8082/"/>
-    <parameter name="adminUrl" value="https://admin-demo.nopcommerce.com"/>
+
+    <parameter name="environment" value="dev"/>
+
 
     <test name="Run on FireFox">
         <parameter name="browser" value="firefox" />
         <classes>
-            <class name="com.nopcommerce.users.Level_25_Manage_Data_04_JSON_Excel"/>
+            <class name="com.nopcommerce.users.Level_26_Environment"/>
         </classes>
     </test>
 
